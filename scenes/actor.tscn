@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://dyxs3vmc2npm6"]
+
+[ext_resource type="Texture2D" uid="uid://cr7265yswpx57" path="res://assets/player/Player.png" id="1_brg7h"]
+[ext_resource type="Script" path="res://addons/ModularComponents/Components/gravity.gd" id="2_ls6mc"]
+[ext_resource type="Script" path="res://addons/ModularComponents/Components/move_and_slide.gd" id="4_h24mx"]
+[ext_resource type="Script" path="res://addons/ModularComponents/Components/jump.gd" id="5_m01nt"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e8s5w"]
+radius = 25.0
+height = 96.0
+
+[node name="Actor" type="CharacterBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.310559, 0.310559)
+texture = ExtResource("1_brg7h")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_e8s5w")
+
+[node name="Components" type="Node" parent="."]
+
+[node name="Gravity" type="Node" parent="Components" node_paths=PackedStringArray("parent")]
+script = ExtResource("2_ls6mc")
+parent = NodePath("../..")
+gravity = 30.0
+
+[node name="Jump" type="Node" parent="Components" node_paths=PackedStringArray("parent")]
+script = ExtResource("5_m01nt")
+parent = NodePath("../..")
+jump_force = 600.0
+jump_limit = 2.0
+jump_action = &"Jump"
+
+[node name="MoveAndSlide" type="Node" parent="Components" node_paths=PackedStringArray("parent")]
+script = ExtResource("4_h24mx")
+parent = NodePath("../..")
