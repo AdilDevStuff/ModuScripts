@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://dyxs3vmc2npm6"]
 
 [ext_resource type="Texture2D" uid="uid://cr7265yswpx57" path="res://assets/player/Player.png" id="1_brg7h"]
-[ext_resource type="Script" path="res://addons/ModuScripts/Components/gravity.gd" id="2_ls6mc"]
-[ext_resource type="Script" path="res://addons/ModuScripts/Components/move_and_slide.gd" id="4_h24mx"]
-[ext_resource type="Script" path="res://addons/ModuScripts/Components/jump.gd" id="5_m01nt"]
+[ext_resource type="Script" path="res://addons/ModuScripts/components/gravity.gd" id="2_ls6mc"]
+[ext_resource type="Script" path="res://addons/ModuScripts/components/move_and_slide.gd" id="4_h24mx"]
+[ext_resource type="Script" path="res://addons/ModuScripts/components/jump.gd" id="5_m01nt"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e8s5w"]
 radius = 25.0
