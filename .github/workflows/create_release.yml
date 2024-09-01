@@ -1,38 +1,43 @@
-name: Create Release
+name: Create Release with Zipped Folder
 
 on:
   push:
     tags:
-      - 'v*.*' # Trigger this workflow on tags like v1.0
-
+      - 'v*.*.*'
 jobs:
-  create-release:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Set up Git
-        run: git config --global user.name "GitHub Actions" && git config --global user.email "actions@github.com"
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Install dependencies
+      run: npm install
 
-      - name: Archive folder
-        run: zip -r folder.zip /addons/moduscripts
+    - name: Zip the folder
+      run: zip -r folder.zip addons/moduscripts
 
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./folder.zip
-          asset_name: folder.zip
-          asset_content_type: application/zip
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref_name }}
+        release_name: Release ${{ github.ref_name }}
+        draft: false
+        prerelease: false
+
+    - name: Upload ZIP to Release
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: folder.zip
+        asset_name: folder.zip
+        asset_content_type: application/zip
