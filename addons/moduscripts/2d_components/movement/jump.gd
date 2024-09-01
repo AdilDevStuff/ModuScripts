@@ -15,7 +15,6 @@ var jump_count = 0
 @export var jump_action: StringName
 
 func _physics_process(delta: float) -> void:
-	print(jump_count)
 	if parent.is_on_floor():
 		jump_count = 0
 		

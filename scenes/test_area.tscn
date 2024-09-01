@@ -1,18 +1,26 @@
-[gd_scene load_steps=3 format=3 uid="uid://dl7mwow3jesrt"]
+[gd_scene load_steps=4 format=3 uid="uid://dl7mwow3jesrt"]
 
 [ext_resource type="PackedScene" uid="uid://dyxs3vmc2npm6" path="res://scenes/actor.tscn" id="1_gb1u3"]
+[ext_resource type="Script" path="res://addons/moduscripts/2d_components/spawning/spawn_object_after_delay.gd" id="2_ikodv"]
 [ext_resource type="Script" path="res://scripts/ground.gd" id="2_xwm0t"]
 
 [node name="TestArea" type="Node2D"]
-
-[node name="Actor" parent="." instance=ExtResource("1_gb1u3")]
-position = Vector2(345, 331)
 
 [node name="Ground" type="StaticBody2D" parent="."]
 script = ExtResource("2_xwm0t")
 
 [node name="Ground" type="Polygon2D" parent="Ground"]
 color = Color(0.400584, 0.981995, 0.535843, 1)
-polygon = PackedVector2Array(0, 512, 1216, 512, 1216, 648, 0, 648)
+polygon = PackedVector2Array(0, 512, 1152, 512, 1152, 648, 0, 648)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="Ground"]
+
+[node name="PlayerSpawnPos" type="Marker2D" parent="."]
+position = Vector2(173, 420)
+
+[node name="SpawnObjectAfterDelay" type="Node" parent="." node_paths=PackedStringArray("object_spawn_parent_node", "object_spawn_position")]
+script = ExtResource("2_ikodv")
+object_spawn_delay = 1.0
+object_to_spawn = ExtResource("1_gb1u3")
+object_spawn_parent_node = NodePath("..")
+object_spawn_position = NodePath("../PlayerSpawnPos")

@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://dyxs3vmc2npm6"]
+[gd_scene load_steps=7 format=3 uid="uid://dyxs3vmc2npm6"]
 
 [ext_resource type="Texture2D" uid="uid://cr7265yswpx57" path="res://assets/player/Player.png" id="1_brg7h"]
-[ext_resource type="Script" path="res://addons/ModuScripts/components/gravity.gd" id="2_ls6mc"]
-[ext_resource type="Script" path="res://addons/ModuScripts/components/move_and_slide.gd" id="4_h24mx"]
-[ext_resource type="Script" path="res://addons/ModuScripts/components/jump.gd" id="5_m01nt"]
+[ext_resource type="Script" path="res://addons/moduscripts/2d_components/movement/gravity.gd" id="2_e8x4t"]
+[ext_resource type="Script" path="res://addons/moduscripts/2d_components/movement/jump.gd" id="3_w3li3"]
+[ext_resource type="Script" path="res://addons/moduscripts/2d_components/movement/move_and_slide.gd" id="4_2kag2"]
+[ext_resource type="Script" path="res://addons/moduscripts/2d_components/movement/horizontal_movement.gd" id="5_nt0yw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e8s5w"]
 radius = 25.0
@@ -18,20 +19,29 @@ texture = ExtResource("1_brg7h")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_e8s5w")
 
+[node name="BulletSpawnPos" type="Marker2D" parent="."]
+
 [node name="Components" type="Node" parent="."]
 
 [node name="Gravity" type="Node" parent="Components" node_paths=PackedStringArray("parent")]
-script = ExtResource("2_ls6mc")
+script = ExtResource("2_e8x4t")
 parent = NodePath("../..")
 gravity = 30.0
 
 [node name="Jump" type="Node" parent="Components" node_paths=PackedStringArray("parent")]
-script = ExtResource("5_m01nt")
+script = ExtResource("3_w3li3")
 parent = NodePath("../..")
 jump_force = 600.0
 jump_limit = 2.0
 jump_action = &"Jump"
 
 [node name="MoveAndSlide" type="Node" parent="Components" node_paths=PackedStringArray("parent")]
-script = ExtResource("4_h24mx")
+script = ExtResource("4_2kag2")
 parent = NodePath("../..")
+
+[node name="HorizontalMovement" type="Node" parent="Components" node_paths=PackedStringArray("parent")]
+script = ExtResource("5_nt0yw")
+parent = NodePath("../..")
+move_speed = 400.0
+negative_action = &"Left"
+positive_action = &"Right"
