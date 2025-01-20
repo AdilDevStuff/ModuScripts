@@ -1,16 +1,19 @@
-[gd_scene load_steps=7 format=3 uid="uid://dyxs3vmc2npm6"]
+[gd_scene load_steps=9 format=3 uid="uid://dyxs3vmc2npm6"]
 
 [ext_resource type="Texture2D" uid="uid://cr7265yswpx57" path="res://assets/player/Player.png" id="1_brg7h"]
+[ext_resource type="Script" path="res://scripts/actor.gd" id="1_e8iti"]
 [ext_resource type="Script" path="res://addons/moduscripts/2d_components/movement/gravity.gd" id="2_e8x4t"]
 [ext_resource type="Script" path="res://addons/moduscripts/2d_components/movement/jump.gd" id="3_w3li3"]
 [ext_resource type="Script" path="res://addons/moduscripts/2d_components/movement/move_and_slide.gd" id="4_2kag2"]
 [ext_resource type="Script" path="res://addons/moduscripts/2d_components/movement/horizontal_movement.gd" id="5_nt0yw"]
+[ext_resource type="Script" path="res://addons/moduscripts/utility_components/health_component.gd" id="6_t2jxd"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e8s5w"]
 radius = 25.0
 height = 96.0
 
 [node name="Actor" type="CharacterBody2D"]
+script = ExtResource("1_e8iti")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.310559, 0.310559)
@@ -45,3 +48,10 @@ parent = NodePath("../..")
 move_speed = 400.0
 negative_action = &"Left"
 positive_action = &"Right"
+
+[node name="HealthComponent" type="Node" parent="Components" node_paths=PackedStringArray("parent")]
+script = ExtResource("6_t2jxd")
+parent = NodePath("../..")
+
+[connection signal="damaged" from="Components/HealthComponent" to="." method="_on_health_component_damaged"]
+[connection signal="killed" from="Components/HealthComponent" to="." method="_on_health_component_killed"]
